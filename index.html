@@ -9,16 +9,16 @@
   <style type="text/css">
     /* styling for the video thumbnails */
     .video-thumbnail {
-    		margin: 0;
-    		padding: 0;
-    		width: 190px;
-    		height: 107px;
-    		cursor: pointer;
+      margin: 0;
+      padding: 0;
+      width: 190px;
+      height: 107px;
+      cursor: pointer;
     }
     /*override some of the default overlay styling*/
     div.vjs-overlay.vjs-overlay-top-left {
-    		width: 100%;
-    		left: 0;
+      width: 100%;
+      left: 0;
     }
   </style>
 </head>
@@ -36,7 +36,7 @@
     height="360"></video>
   <script src="//players.brightcove.net/1752604059001/default_default/index.min.js"></script>
 
-	<script src="//players.brightcove.net/videojs-overlay/1/videojs-overlay.min.js"></script>
+  <script src="//players.brightcove.net/videojs-overlay/1/videojs-overlay.min.js"></script>
 
   <!-- custom script -->
   <script type="text/javascript">
@@ -46,14 +46,14 @@
       policyKey = "BCpkADawqM1eifBpAkEr4aJrH9i950qErQCg8FvHXBCigF0JjC-zZyhN4T1XGGGBbB0hojevaABtp54BTvT9Er0KplSpC6tqm8YgyCtIzGl5sc77i23GLWYdpLdtF7Aei45EuLqlUznlkiXU",
       videoData = [];
 
-	/**
+  /**
    * wait for the video metadata to load
    */
-	videojs("myPlayerID").one('loadedmetadata', function(){
+  videojs("myPlayerID").one('loadedmetadata', function(){
     myPlayer = this;
-		// set up the Playback API request
+    // set up the Playback API request
     requestData = setRequestData();
-		// make the Playback API request
+    // make the Playback API request
     getRelatedVideos(requestData, function(relatedVideos) {
       // extract the needed video data into an array
       videoData = extractVideoData(relatedVideos);
@@ -65,10 +65,10 @@
 
   });
 
-	/**
+  /**
    * set up the Playback API request
    */
-	function setRequestData() {
+  function setRequestData() {
     var endPoint = '',
         accountId,
         videoName,
