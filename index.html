@@ -7,39 +7,39 @@
   <link href="//players.brightcove.net/videojs-overlay/1/videojs-overlay.css" rel="stylesheet">
 
   <style type="text/css">
-	  /* styling for the video thumbnails */
-		.video-thumbnail {
-				margin: 0;
-				padding: 0;
-				width: 190px;
-				height: 107px;
-				cursor: pointer;
-		}
-		/*override some of the default overlay styling*/
-		div.vjs-overlay.vjs-overlay-top-left {
-				width: 100%;
-				left: 0;
-		}
+    /* styling for the video thumbnails */
+    .video-thumbnail {
+    		margin: 0;
+    		padding: 0;
+    		width: 190px;
+    		height: 107px;
+    		cursor: pointer;
+    }
+    /*override some of the default overlay styling*/
+    div.vjs-overlay.vjs-overlay-top-left {
+    		width: 100%;
+    		left: 0;
+    }
   </style>
 </head>
 
 <body>
   <video id="myPlayerID"
-	  data-video-id="5604123528001"
-		data-account="1752604059001"
-		data-player="default"
-		data-embed="default"
-		data-application-id
-		class="video-js"
-		controls
-		width="640"
-		height="360"></video>
-	<script src="//players.brightcove.net/1752604059001/default_default/index.min.js"></script>
+    data-video-id="5604123528001"
+    data-account="1752604059001"
+    data-player="default"
+    data-embed="default"
+    data-application-id
+    class="video-js"
+    controls
+    width="640"
+    height="360"></video>
+  <script src="//players.brightcove.net/1752604059001/default_default/index.min.js"></script>
 
 	<script src="//players.brightcove.net/videojs-overlay/1/videojs-overlay.min.js"></script>
 
   <!-- custom script -->
-	<script type="text/javascript">
+  <script type="text/javascript">
   var myPlayer,
       requestData,
       apiBaseURL = 'https://edge.api.brightcove.com/playback/v1/accounts/',
@@ -55,13 +55,12 @@
     requestData = setRequestData();
 		// make the Playback API request
     getRelatedVideos(requestData, function(relatedVideos) {
-			// extract the needed video data into an array
-			videoData = extractVideoData(relatedVideos);
-			console.log("videoData= ",videoData);
-			// generate the HTML for the overlay
-			videoList = createVideoList(videoData);
-			// add the overlay
-			addOverlayText(videoList);
+      // extract the needed video data into an array
+      videoData = extractVideoData(relatedVideos);
+      // generate the HTML for the overlay
+      videoList = createVideoList(videoData);
+      // add the overlay
+      addOverlayText(videoList);
     });
 
   });
@@ -70,59 +69,55 @@
    * set up the Playback API request
    */
 	function setRequestData() {
-	    var endPoint = '',
-	        accountId,
-	        videoName,
-	        requestURL,
-	        endPoint,
-	        tagValue,
-	        requestData = {},
-	        dataReturned = false;
+    var endPoint = '',
+        accountId,
+        videoName,
+        requestURL,
+        endPoint,
+        tagValue,
+        requestData = {},
+        dataReturned = false;
 
       // use the mediainfo object to get the account id, tag value and video name for the video currently loaded in the player
-	    accountId = myPlayer.mediainfo.account_id;
-	    tagValue = myPlayer.mediainfo.tags[0];
-	    videoName = myPlayer.mediainfo.name;
+      accountId = myPlayer.mediainfo.account_id;
+      tagValue = myPlayer.mediainfo.tags[0];
+      videoName = myPlayer.mediainfo.name;
 
       // add the account id and videos search term to the base URL. Note that your policy key needs to be enabled for search or you will get an error with the request.
-	    requestURL = apiBaseURL + accountId + '/videos';
-	    // return up to 9 videos which have a tag value equal to the current video, excluding the current video by name
-	    endPoint = '?q=tags:"' + tagValue + '" -name:"' + videoName + '"&limit=9';
+      requestURL = apiBaseURL + accountId + '/videos';
+      // return up to 9 videos which have a tag value equal to the current video, excluding the current video by name
+      endPoint = '?q=tags:"' + tagValue + '" -name:"' + videoName + '"&limit=9';
 
       // add the query string to the request URL
-	    requestData.url = requestURL + endPoint;
-			console.log("requestData.url= ",requestData.url);
-			// set the request type to GET
-	    requestData.requestType = 'GET';
-	    return requestData;
+      requestData.url = requestURL + endPoint;
+      // set the request type to GET
+      requestData.requestType = 'GET';
+      return requestData;
 	  }
 
 		/**
      * request data from the Playback API
      */
-		 getRelatedVideos = function(options, callback) {
-			 console.log("getRelatedVideos");
-	     var httpRequest = new XMLHttpRequest(),
-	       responseData,
-	       parsedData,
-	       // response handler
-	       getResponse = function() {
-	         try {
-	           if (httpRequest.readyState === 4) {
-	             if (httpRequest.status >= 200 && httpRequest.status < 300) {
-	               responseData = httpRequest.responseText;
-	               parsedData = JSON.parse(responseData);
-								 console.log("parsedData= ",parsedData);
-
-	               callback(parsedData);
-	             } else {
-	               alert('There was a problem with the request. Request returned ' + httpRequest.status);
-	             }
-	           }
-	         } catch (e) {
-	           alert('Caught Exception: ' + e);
-	         }
-	       };
+    getRelatedVideos = function(options, callback) {
+     var httpRequest = new XMLHttpRequest(),
+       responseData,
+       parsedData,
+       // response handler
+       getResponse = function() {
+         try {
+           if (httpRequest.readyState === 4) {
+             if (httpRequest.status >= 200 && httpRequest.status < 300) {
+               responseData = httpRequest.responseText;
+               parsedData = JSON.parse(responseData);
+               callback(parsedData);
+             } else {
+               alert('There was a problem with the request. Request returned ' + httpRequest.status);
+             }
+           }
+         } catch (e) {
+           alert('Caught Exception: ' + e);
+         }
+       };
 	     // set the response handler
 	     httpRequest.onreadystatechange = getResponse;
 	     // open the request
@@ -133,20 +128,18 @@
 	     httpRequest.send();
 	   };
 
-		 /**
-        * extract video data from Playback API response
-        * @param {array} playbackData the data from the Playback API
-        * @return {array} videoData array of video info
-        */
+    /**
+      * extract video data from Playback API response
+      * @param {array} playbackData the data from the Playback API
+      * @return {array} videoData array of video info
+      */
       function extractVideoData(playbackData) {
           var i,
               iMax = playbackData.videos.length,
               videoItem;
-							console.log("playbackData= ",playbackData);
-							console.log("iMax= ",iMax);
+
           for (i = 0; i < iMax; i++) {
               if (playbackData.videos[i].id !== null || playbackData.videos[i].thumbnail !== null) {
-								console.log("playbackData item= ",playbackData.videos[i]);
                   videoItem = {};
                   videoItem.id = playbackData.videos[i].id;
                   videoItem.name = playbackData.videos[i].name;
@@ -184,7 +177,6 @@
               videoWrapper.appendChild(thumbnailLink);
               thumbnailLink.appendChild(thumbnailImage);
           }
-					console.log("videoList= ",videoList);
           return videoList;
       }
 
@@ -222,7 +214,6 @@
        * @param {HTML} overlayContent the HTML for the overlay
        */
       function addOverlayText(overlayContent) {
-				console.log("addOverlayText= ",overlayContent);
           myPlayer.overlay({
               overlays: [{
                 content: overlayContent,
