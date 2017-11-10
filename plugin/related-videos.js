@@ -5,20 +5,20 @@ videojs.registerPlugin('pluginName', function() {
         policyKey = "BCpkADawqM1eifBpAkEr4aJrH9i950qErQCg8FvHXBCigF0JjC-zZyhN4T1XGGGBbB0hojevaABtp54BTvT9Er0KplSpC6tqm8YgyCtIzGl5sc77i23GLWYdpLdtF7Aei45EuLqlUznlkiXU",
         videoData = [];
 
-		// set up the Playback API request
+    // set up the Playback API request
     requestData = setRequestData();
-		// make the Playback API request
+    // make the Playback API request
     getRelatedVideos(requestData, function(relatedVideos) {
-			// extract the needed video data into an array
-			videoData = extractVideoData(relatedVideos);
-			console.log("videoData= ",videoData);
-			// generate the HTML for the overlay
-			videoList = createVideoList(videoData);
-			// add the overlay
-			addOverlayText(videoList);
+      // extract the needed video data into an array
+      videoData = extractVideoData(relatedVideos);
+      console.log("videoData= ",videoData);
+      // generate the HTML for the overlay
+      videoList = createVideoList(videoData);
+      // add the overlay
+      addOverlayText(videoList);
     });
 
-  	/**
+    /**
      * set up the Playback API request
      */
   	function setRequestData() {
@@ -32,28 +32,26 @@ videojs.registerPlugin('pluginName', function() {
   	        dataReturned = false;
 
         // use the mediainfo object to get the account id, tag value and video name for the video currently loaded in the player
-  	    accountId = myPlayer.mediainfo.account_id;
-  	    tagValue = myPlayer.mediainfo.tags[0];
-  	    videoName = myPlayer.mediainfo.name;
+        accountId = myPlayer.mediainfo.account_id;
+        tagValue = myPlayer.mediainfo.tags[0];
+        videoName = myPlayer.mediainfo.name;
 
         // add the account id and videos search term to the base URL. Note that your policy key needs to be enabled for search or you will get an error with the request.
-  	    requestURL = apiBaseURL + accountId + '/videos';
-  	    // return up to 9 videos which have a tag value equal to the current video, excluding the current video by name
-  	    endPoint = '?q=tags:"' + tagValue + '" -name:"' + videoName + '"&limit=9';
+        requestURL = apiBaseURL + accountId + '/videos';
+        // return up to 9 videos which have a tag value equal to the current video, excluding the current video by name
+        endPoint = '?q=tags:"' + tagValue + '" -name:"' + videoName + '"&limit=9';
 
         // add the query string to the request URL
-  	    requestData.url = requestURL + endPoint;
-  			console.log("requestData.url= ",requestData.url);
-  			// set the request type to GET
-  	    requestData.requestType = 'GET';
-  	    return requestData;
+        requestData.url = requestURL + endPoint;
+        // set the request type to GET
+        requestData.requestType = 'GET';
+        return requestData;
   	  }
 
-  		/**
+      /**
        * request data from the Playback API
        */
-  		 getRelatedVideos = function(options, callback) {
-  			 console.log("getRelatedVideos");
+       getRelatedVideos = function(options, callback) {
   	     var httpRequest = new XMLHttpRequest(),
   	       responseData,
   	       parsedData,
@@ -64,7 +62,6 @@ videojs.registerPlugin('pluginName', function() {
   	             if (httpRequest.status >= 200 && httpRequest.status < 300) {
   	               responseData = httpRequest.responseText;
   	               parsedData = JSON.parse(responseData);
-  								 console.log("parsedData= ",parsedData);
 
   	               callback(parsedData);
   	             } else {
@@ -85,7 +82,7 @@ videojs.registerPlugin('pluginName', function() {
   	     httpRequest.send();
   	   };
 
-  		 /**
+        /**
           * extract video data from Playback API response
           * @param {array} playbackData the data from the Playback API
           * @return {array} videoData array of video info
@@ -94,8 +91,7 @@ videojs.registerPlugin('pluginName', function() {
             var i,
                 iMax = playbackData.videos.length,
                 videoItem;
-  							console.log("playbackData= ",playbackData);
-  							console.log("iMax= ",iMax);
+
             for (i = 0; i < iMax; i++) {
                 if (playbackData.videos[i].id !== null || playbackData.videos[i].thumbnail !== null) {
   								console.log("playbackData item= ",playbackData.videos[i]);
@@ -136,7 +132,6 @@ videojs.registerPlugin('pluginName', function() {
                 videoWrapper.appendChild(thumbnailLink);
                 thumbnailLink.appendChild(thumbnailImage);
             }
-  					console.log("videoList= ",videoList);
             return videoList;
         }
 
@@ -174,7 +169,6 @@ videojs.registerPlugin('pluginName', function() {
          * @param {HTML} overlayContent the HTML for the overlay
          */
         function addOverlayText(overlayContent) {
-  				console.log("addOverlayText= ",overlayContent);
             myPlayer.overlay({
                 overlays: [{
                   content: overlayContent,
