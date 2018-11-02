@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Related Videos with the Playback API</title>
-  <link href="//players.brightcove.net/videojs-overlay/1/videojs-overlay.css" rel="stylesheet">
+  <link href="https://players.brightcove.net/videojs-overlay/1/videojs-overlay.css" rel="stylesheet">
 
   <style type="text/css">
     /* styling for the video thumbnails */
@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <video id="myPlayerID"
+  <video-js id="myPlayerID"
     data-video-id="5604123528001"
     data-account="1752604059001"
     data-player="default"
@@ -33,10 +33,10 @@
     class="video-js"
     controls
     width="640"
-    height="360"></video>
-  <script src="//players.brightcove.net/1752604059001/default_default/index.min.js"></script>
+    height="360"></video-js>
+  <script src="https://players.brightcove.net/1752604059001/default_default/index.min.js"></script>
 
-  <script src="//players.brightcove.net/videojs-overlay/1/videojs-overlay.min.js"></script>
+  <script src="https://players.brightcove.net/videojs-overlay/1/videojs-overlay.min.js"></script>
 
   <!-- custom script -->
   <script type="text/javascript">
@@ -49,7 +49,7 @@
   /**
    * wait for the video metadata to load
    */
-  videojs("myPlayerID").one('loadedmetadata', function(){
+  videojs.getPlayer('myPlayerID').one('loadedmetadata', function(){
     myPlayer = this;
     // set up the Playback API request
     requestData = setRequestData();
